@@ -1,0 +1,37 @@
+---
+import { siteConfig } from "../config";
+const accent = siteConfig.accentColor || "#1a7d0fff";
+const skills = siteConfig.skillsProficiency || [];
+---
+
+<section id="skills" class="p-8 sm:p-12 md:p-16 lg:p-24">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
+    <div class="lg:col-span-4">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-bold text-gray-900">
+        Skills
+      </h2>
+      <div class="w-[75px] h-[5px] mt-2 rounded-full" style={`background-color: ${accent}`}></div>
+      <p class="mt-4 text-sm text-gray-600">
+        Proficiency overview across key technologies.
+      </p>
+    </div>
+
+    <div class="lg:col-span-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {
+          skills.map((s) => (
+            <div class="rounded-md border border-gray-200 bg-white p-3 shadow-sm">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-gray-900">{s.name}</span>
+                <span class="text-xs font-semibold text-gray-600">{s.level}%</span>
+              </div>
+              <div class="mt-2 h-2 w-full rounded-full bg-gray-200 overflow-hidden" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow={s.level} aria-label={`${s.name} proficiency`}>
+                <div class="h-full rounded-full" style={`width: ${s.level}%; background-color: ${accent}`}></div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
