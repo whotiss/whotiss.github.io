@@ -30,7 +30,7 @@ export const siteConfig = {
       name: "Dev Portfolio",
       description:
         "A comprehensive portfolio showcasing my projects, skills, and experience as a developer.",
-      link: "https://azan.dev",
+      link: "https://github.com/whotiss/whotiss.github.io",
       skills: ["Astro", "CSS", "JavaScript"],
     },
   ],
