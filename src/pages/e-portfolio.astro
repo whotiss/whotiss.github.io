@@ -1,0 +1,569 @@
+---
+import { siteConfig } from "../config";
+import "../styles/global.css";
+import { ViewTransitions } from "astro:transitions";
+
+const skillHighlights = (siteConfig.skills || []).slice(0, 6);
+
+const writingTasks = [
+    {
+        title: "Character Writing Task",
+        label: `
+- Name: Elektra Liu Shuishi
+- Hazel eyes
+- Long light brown hair
+- East Asian
+- Average height for a woman (~164 cm)
+- Expansive smile but mostly stern
+- Fair skin with dimples
+- Thin, shaky voice but bold
+- Voice that can gather attention
+- Smells of lilac, gooseberry
+- Strong scent
+- Skin soft to touch with light scars in some places
+- Sweet but not afraid to be sour at the right moments
+- Short tempered
+- Smoky but not flashy
+- Physically strong without obtruding muscles
+- Quite flexible like a gymnast`,
+    },
+    {
+        title: "Plot Writing Task",
+        label: `
+Characters:
+Pluto is Geralt's sidekick and follows him and looks up to him.			
+Geralt is a high command police officer and who has a strict code.
+Grace is the love interest of Geralt however she is an undercover criminal but doesn't want Geralt to find out that the person he loves the most is someone who he would despise.
+
+On a late gloomy night in Albuquerque, Pluto and Geralt are on their night duty having a watchful eye. Pluto asks Geralt if everything is alright lately as he's been acting out of the ordinary. Hesitant at first Geralt responds to his partner by saying how he’s conflicted within himself about a certain person. Not mentioning any names, Geralt says that he doesn’t know if he should fully commit to his current situation as he has always had trust issues in relationships. Feeling bad for his partner, Pluto advises Geralt to follow his heart and go for it if he actually feels real emotions. During this conversation, Geralt catches a little glimpse of a person breaking inside the bank that they are parked opposite of. With a slight motion of hands, Geralt tells Pluto to shut up and focus on what’s happening. Both of them take out their guns and start heading towards the bank, they tread lightly. As soon as they reach the main entrance a person bursts out with a bag and a gun in hand as they had just emptied out the ATM, Geralt and Pluto both tell the unknown person to drop their weapon. The person doesn’t respond and aims the gun at Pluto as that's their last resort, without hesitation Geralt shouts at the person one last time. Without any response, Geralt shoots the person in their shoulder. After checking up on Pluto, both of them go on to check the person, who is still alive. Pluto unmasks the person and as soon as Geralt sees the face of the unknown person, he is overrun with emotions. To be continued ……….`,
+    },
+    {
+        title: "Dialogue Writing Task ",
+        label: `
+“You hear that?” Arazon asked, slowing his steps.
+Liran frowned. “Hear what?”
+“Exactly.”
+She stopped beside him. The forest was still, not peaceful, just empty?  No insects. No wind through leaves.
+“That’s not normal,” she said.
+Arazon shifted his pack. “The old paths used to pass through here.”
+“Used to,” Liran repeated. “That doesn’t mean anything lives here now.”
+They moved forward anyway, boots sinking slightly into damp soil. The ground felt softer than it should have, like it remembered being walked on more often.
+Liran broke the silence. “You’re tense.”
+“You say that like it’s a bad thing.”
+She smirked. “It usually is.”
+Arazon stopped suddenly. “Wait.”
+Liran nearly walked into him. “What now?”
+He pointed toward a ring of stones half-buried beneath moss. They were arranged too evenly to be natural.
+“That’s deliberate,” she said slowly.
+“Yeah.”
+They stood there a moment, both uneasy.
+Then a voice spoke, low and rough, like wet earth shifting.
+“You’re standing where songs once rested.”
+Liran spun around. “Who said that?”
+Arazon didn’t move. His heart was racing, but his voice stayed steady. “We didn’t mean to trespass.”
+There was a pause. Then the voice again, closer now.
+“No one means to.”
+Liran whispered, “Arazon…”
+“I know,” he said softly.
+A shape emerged from between the trees  not fully, never fully. Just enough to be seen. Its form blurred at the edges, as if it didn’t belong entirely in the light.
+“You shouldn’t be here,” Liran said, forcing confidence into her voice.
+“We were here first,” the creature replied.
+Arazon swallowed. “You’re… one of the old ones.”
+The creature tilted its head. “Is that what we’re called now?”
+Liran glanced at Arazon. “You said they were gone.”
+“So did everyone else,” he replied.
+Silence stretched again, heavy but not hostile.
+Finally, the creature spoke. “Do you still sing?”
+Arazon hesitated. “Sometimes.”
+“Then sing,” it said. “Not for us. For the ground. It forgets more slowly than people do.”
+Liran stared at him. “You’re not actually considering”
+“I am,” Arazon said.
+He set his pack down, hands shaking slightly as he lifted his lute. “Just… stay close.”
+The creature stepped back, retreating toward the trees. “We always do.”
+Arazon played.
+The sound was soft, almost uncertain. The forest didn’t respond but it didn’t resist either.
+When the song ended, the clearing felt different. Not alive. Not empty.
+Just remembered.
+Liran exhaled. “Okay,” she said quietly. “Next time you say ‘you hear that,’ we turn around.”
+Arazon didn’t answer.
+He was listening.`,
+    },
+];
+
+const shortStoryResponses = [
+    {
+        title: "Lottery Short Story Response ",
+        label: `
+After reading this story, I thought how the start was so ordinary and calm. Which made the ending so much more disturbing. The normal way the villagers talked, joked about, and followed tradition made me question how people will blindly follow cruel practices simply because they are familiar or have “always been done in their culture” It reminds me of real-life situations where harmful traditions, social norms continue because no one wants to challenge or stand out. In that sense, the story connects to historical events and even modern societies where people participate in wrongdoing without questioning it. As I was reading, my feelings shifted a lot. At the beginning, I felt curious and slightly uneasy. As the lottery progressed, that uneasiness turned into tension and weirdness. By the end, I felt disturbed, especially by how quickly the community turned against one of their own. Overall the story is quite uncomfortable, forcing me to think about conformity, moral responsibility, and how dangerous it can be when people follow traditions blindly without considering their humanity.`,
+        guidance: "",
+    },
+    {
+        title: "Paper Menagerie Short Story Response ",
+        label: `
+The title of this story immediately stood out to me because it feels unusual and almost light-hearted. At first, I expected the story to mainly focus on the paper animals, especially when the paper tiger and other creatures come to life and play with Jack. As the story develops, however, it becomes clear that the paper menagerie is not the main focus, but rather a symbol of Jack’s relationship with his mother and his cultural identity over time. As Jack grows older, he begins to feel embarrassed by his mother, particularly because of her accent, food, and traditions. When he asks her to stop speaking Chinese and making the paper animals, it shows how badly he wants to fit in. This part felt especially painful because the paper animals once represented comfort and love, but later become something he rejects along with his heritage and identity. The ending of the story was the heavy hitter. When Jack reads his mother’s letter after her death and learns about her past and sacrifices, it completely shifts the meaning of the earlier scenes. The regret he feels comes way too late, which made the story feel quite sad. This story resonated a bit with me because the feeling of being an “out of place” kid reflected my own immigrant experience. The pressure to blend in and distance yourself from your culture felt very real. Overall, The Paper Menagerie left me feeling reflective and emotionally heavy, reminding me how easy it is to overlook love and identity until they are gone.`,
+    },
+    {
+        title: "Promise is a Promise Short Story Response ",
+        label: `
+1) Which parts of the story would you like an explanation on?
+I would like an explanation of the supernatural element surrounding the baby’s skin colour and whether it is meant to be taken literally or symbolically. I am also unsure how much responsibility Sue Kwan truly bears for what happens at the end.
+
+2) What was your initial response/reaction to the story?
+I felt shocked and curious, especially during the childbirth scene when the baby is revealed. The tension around gender, superstition, and family pressure made the story feel intense and very curious.
+
+3) Do you have any questions for Dr Lee Su Kim, the author?
+I would like to ask whether the story is meant as a critique of superstition and gender preference, or if it is more focused on the emotional cost of making promises under pressure.
+
+4) Any other questions or comments about the story.
+The story effectively shows how cultural beliefs, fear, and promises can combine to create tragic outcomes. The ending stayed with me because it felt both ironic and sad.
+        `,
+    },
+];
+
+const storyDrafts = [
+    {
+        title: "Remembrance Draft",
+        label: `
+Memories of the Past
+
+By the time Arazon understood what the word monster truly meant, most of them were already leaving.
+
+He did not realise it at first. No one ever really did. There had been no announcement to mark it, no great battle or final stand that would later be turned into legend. The world simply grew less patient over time, and in doing so, it grew older. The departure of such beings was quiet, quieter than war and even quieter than peace. It happened in the same way erosion happens, slowly and without anyone truly noticing.
+
+Roads widened where forests once pressed close together, and fields spread into places that had held other names long before maps learned to claim them centuries later. What could not move aside was labelled an obstacle. What resisted was called dangerous. What endured was eventually named monstrous.
+
+Arazon had grown up singing the songs that explained this change.
+
+In those songs, monsters always came from the darkness and returned to it. They were defined by teeth, claws, and curses, given shape so that heroes could justify destroying them and earning their victories. The stories were neat, perhaps too neat, though Arazon did not think about this much at the time. They ended cleanly, usually with steel. Audiences liked them that way. They cheered, and Arazon gave them exactly what they wanted.
+
+He learned early that people did not want complexity from a bard. They wanted reassurance. They wanted to believe that what frightened them was unnatural and temporary, something that could be driven away and forgotten by morning.
+
+So he sang, and he was paid, and the road carried him onward.
+
+What unsettled him were the places where the songs stopped matching what he saw.
+
+Between towns, Arazon noticed hearthstones laid carefully in circles but long cold, as if fires had been extinguished deliberately rather than abandoned in haste. Wells had been filled in with stone and earth, sealed with too much care. Old paths worn into the ground curved away from the road and ended abruptly, leading nowhere anyone remembered going.
+
+Sometimes he found markings half-buried beneath roots or moss — spirals, lines, and patterns worn soft by time. They were too old to frighten anyone anymore, because fear required memory, and memory of these places had faded.
+
+When Arazon asked about them, villagers only shrugged.
+
+“There were things here once,” they said. “Best not to ask what or who. They’re all long gone now, as they should be.”
+
+The Hollow at Marrowfen
+
+The first monster who listened to Arazon did so without stepping fully into the light.
+
+He had made camp in a hollow a short walk from the village of Marrowfen. The trees there grew old and twisted, their roots knotted together like clasped hands. The villagers had warned him not to stay there. They spoke of something in the woods, though no one described it the same way twice.
+
+Arazon stayed anyway, as he always did, and sang.
+
+The song was an old road-ballad, steady and low, meant for long journeys made alone. It spoke of tides that carried sailors farther than they intended, and of shores that only looked familiar from a distance. It was not heroic, and it always ended without triumph.
+
+Halfway through the second verse, Arazon felt something change.
+
+Not movement, but attention.
+
+He looked up slowly and saw a shape crouched just beyond the firelight. The creature was bent low, its limbs long and uneven, its skin ridged like bark after rain. It did not bare its teeth or move closer. It simply listened, its head tilted slightly, as though afraid that even breathing too loudly might disturb the sound.
+
+Every instinct in Arazon told him to stop. Habit carried him forward instead.
+
+When the final note faded, the forest did not immediately return to its usual sounds. Even the insects seemed to pause.
+
+“You sing like someone who remembers,” the creature said.
+
+Its voice was thick and muddy, like the sound of soil after rain. To Arazon, it felt as though the earth itself were speaking for the first time in a long while. The voice was slow and deliberate, but not cruel.
+
+Arazon swallowed. His fingers hovered above the strings. “What should I remember?”
+
+The creature shifted slightly, firelight catching in its eyes.
+
+“The world as it was,” it said. “Before we were made into something else. The tales of the Old.”
+
+The words settled heavily between them.
+
+The creature remained where it was, and Arazon did not invite it closer. Some boundaries, he sensed, were kept not out of fear, but respect.
+
+Eventually, the creature spoke again, and Arazon began to learn the shape of a history that had never been taught to him.
+
+“Before we were called monsters,” it said, “we were simply neighbours. We had names for ourselves.”
+
+Long before the word monster existed, there had been villages woven into the land rather than forced upon it. Homes shaped from bark, stone, and river clay rested where the ground allowed. Paths curved to spare old trees, and time was measured by moonrise and migration rather than harvests.
+
+“We were called the Children of the Earth,” the creature said. “That was our name.”
+
+Arazon listened without moving.
+
+“The Old told us of humanity’s coming,” it continued. “They were meant to be fragile at first. They would need room and patience. We were given the land to tend so they could grow within it — not beneath us, not above us, but alongside us.”
+
+It paused before adding, “And for a time, they did.”
+
+Humans arrived slowly at first. Trade followed. Stories were exchanged. Songs crossed boundaries.
+
+Then paths became roads.
+
+Fields spread outward. Forests retreated. Springs were claimed and redirected. Hills were quarried down until they were useful.
+
+The fire cracked softly.
+
+“We sang together,” the creature said. “Not like you do. There was no audience. No stage. Just voices answering one another, and the land listening.”
+
+Its gaze drifted into the darkness beyond the fire.
+
+“When humans forgot the story,” it said, “they renamed us — stubborn when we would not move, dangerous when we defended what remained.”
+
+Arazon stared into the fire, thinking of the songs he had once sung without asking how those stories began.
+
+“They say you attacked first,” he said quietly.
+
+“We held our ground the way a dam holds back a flood,” the creature replied. “We wanted no victory, only coexistence.”
+
+Arazon had no answer.
+
+Listening
+
+The creature left before dawn. Arazon did not follow.
+
+Three nights later, another came — smaller, pale, its joints bending at odd angles. It carried a cracked flute.
+
+“I used to play,” it said. “Before they burned the village.”
+
+Arazon listened.
+
+After that, others came. Never in crowds. Always cautiously.
+
+They did not ask Arazon to save them. They asked him to remember.
+
+“Sing what stood here before the roads.”
+“Sing the days before we learned to hide.”
+“Sing that we were once more than what remains.”
+
+Arazon stopped singing the old ballads. He began shaping quieter melodies, songs that did not explain or justify, but simply remembered.
+
+As time passed, the hollow grew quieter.
+
+Some nights, no one came at all.
+
+Arazon still played.
+
+He remembered stories of small villages, of homes that were enough, of songs sung only once a year. He remembered being told that songs were never written down because they were meant to move.
+
+On one of his last nights in Marrowfen, no footsteps came.
+
+He sang anyway.
+
+The song faded into the forest and found nothing to answer it.
+
+Only silence remained.
+
+And Arazon understood, slowly and painfully, that he had not been teaching the Children of the Earth how to sing.
+
+He had been learning how to listen when no one was left to speak.`,
+    },
+];
+
+const analysisDrafts = [
+    {
+        title: "The Manager of The Kremlin Analysis Draft",
+        label: `
+Evelyn Waugh’s short story “The Manager of The Kremlin” presents an examination of the immigrant experience after the war, particularly focusing on the struggles of adapting to a foreign country. The story works as a frame narrative, beginning with the apparent success of a nightclub manager named Boris, before gradually revealing the difficult and often desperate circumstances that led him to this position. Through a largely informative and detached tone, Waugh explores themes such as migration, displacement, the commercialization of culture, and the emotional burden of starting over in an unfamiliar environment. By looking at the characters, settings, and narrative style, it becomes clear that Waugh does not portray the immigrant dream as a simple reward for hard work, but rather as a complicated balance between survival and holding on to one’s identity. This analysis will discuss the plot development, narrative techniques, and themes of the story, while also reflecting on Boris’s character through the lens of the immigrant experience, which connects closely with my own background of moving to a new country as a first-generation immigrant at a young age.
+
+The story follows the life of Boris, who is currently the manager of a popular Paris nightclub known as The Kremlin. The narrative begins in the present, with the narrator observing the nightclub’s popularity, and then shifts backwards to describe Boris’s past. We learn that Boris was once a privileged military cadet and the son of a Russian general, living a life of status and security. This contrast is important, as the main direction of the story focuses on Boris’s displacement. After the collapse of the Imperial Government, Boris finds himself fighting in what Waugh describes as a “very odd kind of army” under Kolchak in Siberia (Waugh, 1999, p. 1). From there, he is forced to flee across a frozen landscape to Japanese territory and eventually to America.
+
+Waugh describes this journey with emphasis on how Boris’s identity and social position are slowly stripped away. The retreat through the snow, where Boris is reduced to begging for food while being “patrolled by enemy troops and inhabited by savage Asiatic tribesmen” (Waugh, 1999, p. 2), illustrates the total collapse of the world he once knew. This journey is not only physical, but also psychological, as Boris loses the meaning and value attached to his former status. When he finally reaches America, which is often referred to as the ‘Land of Opportunity,’ the failure of this ideal becomes clear. The text lists his jobs as “a waiter, a chauffeur, a professional dancing-partner, a dock-labourer” (Waugh, 1999, p. 2). This list is important because it shows that in the eyes of this new society, Boris’s aristocratic background no longer matters. He is treated as just another unskilled immigrant. By the time he arrives in Paris, he has no connections and only 300 francs left to his name.
+
+A key moment in the story occurs when Boris faces a critical decision. He can either carefully budget his remaining money to survive a few more weeks in poverty, or he can spend nearly all of it on one final moment of comfort and dignity. He chooses the second option and eats an expensive meal at a luxury restaurant called Larne. This unusual decision becomes the turning point of the story, as he coincidentally meets a wealthy French acquaintance from his past, who later agrees to fund his nightclub. The Frenchman’s reasoning is somewhat ironic and almost absurd, believing that anyone who spends their last money on such a meal is “ordained by God to keep a restaurant” (Waugh, 1999, p. 4). This moment prevents Boris from further decline and leads directly to his success.
+
+To better understand the impact of this story, it is important to examine Waugh’s narrative style and tone. The story is told through a first-person narrator who remains mostly detached and observational. Early in the story, the narrator states that he is “fairly certain that the story told by Boris is true” (Waugh, 1999, p. 1), which gives the impression that this is not a fictional exaggeration, but something grounded in reality. This distance between the narrator and Boris creates an objective tone, as the narrator does not emotionally dwell on Boris’s suffering, but instead presents it as a series of events. This approach makes the tragedy feel more realistic, as it mirrors the emotional restraint Boris himself must adopt in order to survive.
+
+Waugh also relies heavily on specific material details throughout the story. For example, Boris’s height is described precisely as “6 ft. 5 ½ in.” (Waugh, 1999, p. 1), and the cost of his lunch at Larne is broken down in detail, including the bill, tip, doorman’s fee, and taxi fare (Waugh, 1999, p. 3). These exact figures emphasize how fragile Boris’s situation is. For an ordinary citizen, a lunch might be insignificant, but for Boris, each franc represents a serious risk. Irony is another important stylistic feature, especially in the portrayal of the nightclub staff. The doorman, a “perfectly genuine Cossack” with a face “scarred like that of a pre-war German student” (Waugh, 1999, p. 1), has his authentic suffering reduced to a visual attraction for customers. His history is no longer meaningful in itself, only useful as entertainment.
+
+At the center of the story is Boris’s internal conflict between survival and identity. His aristocratic background makes it difficult for him to accept ordinary labor, such as working as a dock-labourer. He is described as sophisticated and proud, and this makes him incompatible with the poverty he experiences. As a result, Boris struggles with whether he should abandon his past in order to survive or hold onto his identity even if it leads to starvation. This tension drives much of the story’s emotional weight.
+
+The setting plays a major role in resolving this conflict. Waugh contrasts the bleak streets of Paris, where Boris is “ill-dressed and friendless” (Waugh, 1999, p. 2), with the artificial environment of the nightclub. When Boris chooses to dine at Larne, he enters a space that reflects his internal identity rather than his external circumstances. This moment leads to the creation of The Kremlin, a setting where Boris’s Russian background becomes a marketable asset instead of a disadvantage. However, this resolution is deeply ironic, as the nightclub is ultimately a fabricated version of his lost home. His survival depends on turning his past into something performative.
+
+The theme of displacement becomes especially clear in the final description of the nightclub. It is referred to as a “sham,” decorated with “rugs and red, woven stuff to represent a tent” (Waugh, 1999, p. 1), designed purely to appeal to tourists. The waiters, who are former officers of the Imperial Guard, wear “magnificent Russian liveries” (Waugh, 1999, p. 1) and serve food theatrically. These details show how the refugees’ suffering has been repackaged into spectacle. As Boris admits near the end, “It is not anything even to own a popular night club when one has lost one’s country” (Waugh, 1999, p. 4). The nightclub represents a constructed reality that appears impressive at night but seems “bogus and tawdry” in daylight (Waugh, 1999, p. 4).
+
+Personally, the scene that affected me most was the detailed description of Boris’s meal at Larne. Ordering expensive food such as caviar, ortolans, and champagne while having no financial security felt extremely risky and unsettling. Coming from an Asian family background where saving money is emphasized, this decision felt almost irrational. As a reader, I felt anxious watching Boris gamble everything on one meal, unsure of what would happen once the bill was paid.
+
+However, this anxiety turns into relief when his decision unexpectedly pays off. Boris’s actions highlight how survival can look different for someone who has lost everything. While my upbringing stressed financial caution, Boris’s choice suggests that maintaining dignity and identity can sometimes matter more than practical survival. This perspective resonated with my own experience of immigrating to the United States at the age of twelve, where my past achievements and identity did not always translate into the new environment.
+
+In conclusion, “The Manager of ‘The Kremlin’” uses a casual frame narrative to explore the deeper realities of the immigrant experience. Through irony, precise detail, and a detached narrative voice, Waugh shows that success for immigrants often comes at the cost of authenticity. The nightclub Boris creates is not a true home, but a reminder of the one he lost. Although the immigrant dream appears to be achieved, Waugh ensures that readers understand the emotional cost behind it. The story ultimately suggests that survival in a new country does not necessarily mean belonging, and that for many immigrants, the past can never be fully reclaimed.`,
+    },
+];
+
+const reflectiveEssay = {
+    title: "Reflective Essay",
+    label: `
+Throughout this course, my understanding of storytelling, theme, and voice developed significantly through the process of drafting, revising, and refining my creative and especially analytical work. Writing the short story Remembrance alongside the accompanying story analysis and other tasks allowed me to explore how narrative perspective, restraint, and symbolism can be used to communicate complex ideas such as displacement, memory, and cultural erasure. Most importantly, the short story assignment helped me understand how inspiration from existing literary traditions particularly J. R. R. Tolkien’s melancholic portrayal of fading magic which I utilized can be adapted into an original voice rather than copied directly.
+
+The earliest drafts of my short story focused heavily on plot and worldbuilding. I was initially concerned with establishing the fantasy setting clearly and explaining the history of the so-called “monsters.” However, as I revised the piece, I realised that over-explanation weakened the emotional impact. This led me to shift toward a quieter, more restrained style where absence, silence, and implication carried more weight than direct exposition. This approach was heavily inspired by Tolkien’s treatment of the departure of magical beings in The Lord of the Rings, where elves, ents, and other ancient creatures do not disappear through violence or conquest, but through time, change, and forgetting. That sense of inevitability where the world simply moves on became central to Remembrance.
+
+In Tolkien’s work, the fading of magic is not framed as a tragedy or with a clear antagonist, but as a sorrowful consequence of progress and human expansion. I consciously reflected this in my portrayal of the Children of the Earth. They are not defeated or destroyed, instead they leave quietly as roads widen, forests retreat, and humans redefine the world through naming and ownership. This allowed me to explore melancholy without relying on dramatic conflict. The absence of a final battle or climactic resolution was a deliberate choice meant to mirror Tolkien’s elegiac tone and to emphasise that loss is often gradual and unnoticed.
+
+The revision process was particularly important in achieving this effect. Feedback and self-reflection led me to remove lines that explicitly stated emotional change, such as “the listening songs changed him,” and replace them with behavioural descriptions that showed Arazon’s transformation instead. By focusing on how his hands slowed, how he left space for silence, and how he continued to sing even when no one was listening, I learned to trust the reader to interpret meaning rather than spelling it out. This was a major development in my writing, as earlier drafts relied too heavily on explanation rather than implication.
+
+My analytical work on The Manager of ‘The Kremlin’ by Evelyn Waugh also influenced my creative decisions. Waugh’s detached narrative style and focus on displacement helped me understand how emotional restraint can make a story more powerful. Just as Boris’s suffering is presented through precise details rather than overt emotional commentary, I attempted to portray loss in Remembrance through material absence such as empty hollows, abandoned paths, and unanswered songs. This cross-application of analytical insight into creative writing strengthened both pieces and demonstrated the value of close reading as a tool for original creation.
+
+The writing tasks such as the dialogue task further reinforced the importance of subtlety. Writing dialogue without heavy narration forced me to rely on implication, pacing, and silence. This skill translated directly into my short story, particularly in scenes between Arazon and the Children of the Earth, where what is left unsaid is often more important than what is spoken. Learning to let dialogue breathe, rather than forcing it to explain, marked another significant improvement in my writing process.
+
+Reflecting on the course as a whole, I believe my strongest growth came from learning how to revise with certain intention rather than impulse. Across multiple writing tasks, I moved away from the instinct to add more explanation and instead focused on refining tone, removing excess, and allowing meaning to emerge through structure, silence, and mainly implication. Drawing inspiration helped me understand how loss can be conveyed quietly and with dignity, not through spectacle but through absence and inevitability. This perspective reshaped how I approached not only Remembrance, but all of my creative and analytical work throughout the course, particularly in how I handled themes of displacement, memory, and cultural erasure.
+
+Overall, this course helped me develop confidence in writing with restraint and purpose. I learned that powerful storytelling does not depend on dramatic events or explicit commentary, but on careful attention to what disappears, what is forgotten, and what remains unspoken. These lessons will continue to influence how I read, analyze, and create narratives.`,
+};
+---
+
+<html lang="en" class="scroll-smooth">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <meta name="description" content={`${siteConfig.name} E-Portfolio`} />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+            rel="stylesheet"
+        />
+        <title>{siteConfig.name} - E-Portfolio</title>
+        <ViewTransitions />
+    </head>
+    <body class="bg-white text-gray-900">
+        <header
+            class="max-w-6xl mx-auto px-6 pt-8 pb-6 flex items-center justify-between"
+        >
+            <a
+                href="/"
+                class="text-sm text-gray-600 hover:text-black transition-colors font-medium"
+            >
+                ← Back to main site
+            </a>
+            <span class="text-xs tracking-wide uppercase text-gray-500">
+                E-Portfolio
+            </span>
+        </header>
+
+        <main class="max-w-6xl mx-auto px-6 pb-16 space-y-14">
+            <section class="space-y-5">
+                <p
+                    class="text-xs font-semibold tracking-[0.2em] text-gray-500 uppercase"
+                >
+                    Final course submission
+                </p>
+                <h1 class="text-3xl md:text-4xl font-semibold leading-tight">
+                    E-Portfolio for FEL-1462 SHORT STORIES.
+                </h1>
+                <p class="text-gray-600 leading-relaxed">
+                    This E-Portfolio presents my final coursework for the
+                    module, including three writing tasks, three short story
+                    responses, a complete short story draft, a story analysis
+                    draft, and a reflective essay. Together, these pieces
+                    document my creative development, analytical skills, and
+                    revision process across the course.
+                </p>
+                <div class="flex flex-wrap gap-3">
+                    <a
+                        href="mailto:24101230@imail.sunway.edu.my"
+                        class="px-4 py-2 rounded-md border border-gray-200 text-gray-800 hover:border-gray-400 transition-colors"
+                    >
+                        Email
+                    </a>
+                </div>
+            </section>
+
+            <section class="space-y-6">
+                <div
+                    class="flex flex-wrap gap-2 rounded-lg border border-gray-200 bg-gray-50 p-2 justify-center text-center"
+                >
+                    <button
+                        data-tab="writing"
+                        class="tab-btn px-3 py-2 rounded-md text-sm font-medium bg-black text-white text-center"
+                        >Writing Tasks</button
+                    >
+                    <button
+                        data-tab="responses"
+                        class="tab-btn px-3 py-2 rounded-md text-sm font-medium text-gray-700 text-center"
+                        >Story Responses</button
+                    >
+                    <button
+                        data-tab="story-draft"
+                        class="tab-btn px-3 py-2 rounded-md text-sm font-medium text-gray-700 text-center"
+                        >Story Draft</button
+                    >
+                    <button
+                        data-tab="analysis"
+                        class="tab-btn px-3 py-2 rounded-md text-sm font-medium text-gray-700 text-center"
+                        >Story Analysis Draft</button
+                    >
+                    <button
+                        data-tab="reflection"
+                        class="tab-btn px-3 py-2 rounded-md text-sm font-medium text-gray-700 text-center"
+                        >Reflection</button
+                    >
+                </div>
+
+                <div class="space-y-4" data-section="writing">
+                    <div class="flex items-baseline">
+                        <h2 class="text-2xl font-semibold">Writing Tasks</h2>
+                    </div>
+                    <div class="grid gap-6 md:grid-cols-3">
+                        {
+                            writingTasks.map((item) => (
+                                <article class="p-5 rounded-lg border border-gray-200 bg-gray-50">
+                                    <h3 class="text-lg font-semibold leading-tight">
+                                        {item.title}
+                                    </h3>
+                                    <p class="text-sm text-gray-600 mt-2 leading-relaxed whitespace-pre-wrap">
+                                        {item.label}
+                                    </p>
+                                    {item.guidance && (
+                                        <p class="text-xs text-gray-500 mt-3">
+                                            {item.guidance}
+                                        </p>
+                                    )}
+                                </article>
+                            ))
+                        }
+                    </div>
+                </div>
+
+                <div class="space-y-4 hidden" data-section="responses">
+                    <div class="flex items-baseline">
+                        <h2 class="text-2xl font-semibold">
+                            Short Story Responses
+                        </h2>
+                    </div>
+                    <div class="grid gap-6 md:grid-cols-3">
+                        {
+                            shortStoryResponses.map((item) => (
+                                <article class="p-5 rounded-lg border border-gray-200">
+                                    <h3 class="text-lg font-semibold leading-tight">
+                                        {item.title}
+                                    </h3>
+                                    <p class="text-sm text-gray-600 mt-2 leading-relaxed whitespace-pre-wrap">
+                                        {item.label}
+                                    </p>
+                                    {item.guidance && (
+                                        <p class="text-xs text-gray-500 mt-3">
+                                            {item.guidance}
+                                        </p>
+                                    )}
+                                </article>
+                            ))
+                        }
+                    </div>
+                </div>
+
+                <div class="space-y-4 hidden" data-section="story-draft">
+                    <div class="flex items-baseline">
+                        <h2 class="text-2xl font-semibold">
+                            Short Story Draft
+                        </h2>
+                    </div>
+                    <div class="grid gap-6 md:grid-cols-1">
+                        {
+                            storyDrafts.map((item) => (
+                                <article class="p-5 rounded-lg border border-gray-200">
+                                    <h3 class="text-lg font-semibold leading-tight">
+                                        {item.title}
+                                    </h3>
+                                    <p class="text-sm text-gray-600 mt-2 leading-relaxed whitespace-pre-wrap">
+                                        {item.label}
+                                    </p>
+                                    {item.guidance && (
+                                        <p class="text-xs text-gray-500 mt-3">
+                                            {item.guidance}
+                                        </p>
+                                    )}
+                                </article>
+                            ))
+                        }
+                    </div>
+                </div>
+
+                <div class="space-y-4 hidden" data-section="analysis">
+                    <div class="flex items-baseline">
+                        <h2 class="text-2xl font-semibold">
+                            Short Story Analysis Draft
+                        </h2>
+                    </div>
+                    <div class="grid gap-6 md:grid-cols-1">
+                        {
+                            analysisDrafts.map((item) => (
+                                <article class="p-5 rounded-lg border border-gray-200 bg-gray-50">
+                                    <h3 class="text-lg font-semibold leading-tight">
+                                        {item.title}
+                                    </h3>
+                                    <p class="text-sm text-gray-600 mt-2 leading-relaxed whitespace-pre-wrap">
+                                        {item.label}
+                                    </p>
+                                    {item.guidance && (
+                                        <p class="text-xs text-gray-500 mt-3">
+                                            {item.guidance}
+                                        </p>
+                                    )}
+                                </article>
+                            ))
+                        }
+                    </div>
+                </div>
+
+                <div class="space-y-4 hidden" data-section="reflection">
+                    <div class="flex items-baseline">
+                        <h2 class="text-2xl font-semibold">Reflective Essay</h2>
+                    </div>
+                    <div class="grid gap-6 md:grid-cols-1">
+                        <article class="p-5 rounded-lg border border-gray-200">
+                            <h3 class="text-lg font-semibold leading-tight">
+                                {reflectiveEssay.title}
+                            </h3>
+                            <p
+                                class="text-sm text-gray-600 mt-2 leading-relaxed whitespace-pre-wrap"
+                            >
+                                {reflectiveEssay.label}
+                            </p>
+                            {
+                                reflectiveEssay.guidance && (
+                                    <p class="text-xs text-gray-500 mt-3">
+                                        {reflectiveEssay.guidance}
+                                    </p>
+                                )
+                            }
+                        </article>
+                    </div>
+                </div>
+            </section>
+            <script is:inline>
+                const tabButtons = Array.from(
+                    document.querySelectorAll(".tab-btn"),
+                );
+                const sections = Array.from(
+                    document.querySelectorAll("[data-section]"),
+                );
+
+                const setActive = (id) => {
+                    tabButtons.forEach((btn) => {
+                        const isActive = btn.dataset.tab === id;
+                        btn.classList.toggle("bg-black", isActive);
+                        btn.classList.toggle("text-white", isActive);
+                        btn.classList.toggle("text-gray-700", !isActive);
+                    });
+
+                    sections.forEach((section) => {
+                        const show = section.dataset.section === id;
+                        section.classList.toggle("hidden", !show);
+                    });
+                };
+
+                tabButtons.forEach((btn) => {
+                    btn.addEventListener("click", () =>
+                        setActive(btn.dataset.tab),
+                    );
+                });
+
+                setActive("writing");
+            </script>
+        </main>
+    </body>
+</html>
