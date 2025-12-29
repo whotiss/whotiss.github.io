@@ -10,9 +10,12 @@ import Certifications from "../components/Certifications.astro";
 import Footer from "../components/Footer.astro";
 import { siteConfig } from "../config";
 import "../styles/global.css";
+
+// 1. Import View Transitions for smooth navigation
+import { ViewTransitions } from "astro:transitions";
 ---
 
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -25,7 +28,12 @@ import "../styles/global.css";
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
       rel="stylesheet"
     />
+
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
     <title>{siteConfig.name} - {siteConfig.title}</title>
+
+    <ViewTransitions />
   </head>
   <body>
     <Header />
@@ -39,5 +47,24 @@ import "../styles/global.css";
       <Certifications />
     </section>
     <Footer />
+
+    <script is:inline src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script is:inline>
+      // Function to setup AOS
+      const initAOS = () => {
+        AOS.init({
+          duration: 800, // Animation duration in ms
+          offset: 100, // Trigger animation 100px before element is visible
+          once: true, // Animation happens only once
+          mirror: false,
+        });
+      };
+
+      // Run on initial load
+      initAOS();
+
+      // Re-run on View Transition navigation (important for Astro)
+      document.addEventListener("astro:after-swap", initAOS);
+    </script>
   </body>
 </html>
